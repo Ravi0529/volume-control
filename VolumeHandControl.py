@@ -28,6 +28,8 @@ volRange = volume.GetVolumeRange()
 volume.SetMasterVolumeLevel(0, None)  # set initial master volume level to 100%
 minVol = volRange[0]
 maxVol = volRange[1]
+vol = 0
+volBar = 400
 
 while True:
     success, img = cap.read()
@@ -45,14 +47,18 @@ while True:
         cv2.circle(img, (cx, cy), 7, (0, 255, 0), cv2.FILLED)
 
         length = math.hypot(x2 - x1, y2 - y1)
-        # Hand Range --> 20 - 150
+        # Hand Range --> 20 - 110
         # Volume Range --> -63.5 - 0.0
         vol = np.interp(length, [20, 110], [minVol, maxVol])
+        volBar = np.interp(length, [20, 110], [400, 150])
         # print(int(length), vol)
         volume.SetMasterVolumeLevel(vol, None)
 
         if length < 20:
             cv2.circle(img, (cx, cy), 7, (255, 0, 0), cv2.FILLED)
+
+    cv2.rectangle(img, (50, 150), (85, 400), (0, 255, 0), 2)
+    cv2.rectangle(img, (50, int(volBar)), (85, 400), (0, 255, 0), cv2.FILLED)
 
     cTime = time.time()
     fps = 1 / (cTime - pTime)
