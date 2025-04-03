@@ -30,6 +30,7 @@ minVol = volRange[0]
 maxVol = volRange[1]
 vol = 0
 volBar = 400
+volPer = 0
 
 while True:
     success, img = cap.read()
@@ -51,6 +52,7 @@ while True:
         # Volume Range --> -63.5 - 0.0
         vol = np.interp(length, [20, 110], [minVol, maxVol])
         volBar = np.interp(length, [20, 110], [400, 150])
+        volPer = np.interp(length, [20, 110], [0, 100])
         # print(int(length), vol)
         volume.SetMasterVolumeLevel(vol, None)
 
@@ -66,6 +68,9 @@ while True:
 
     cv2.putText(
         img, f"FPS: {int(fps)}", (10, 70), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 3
+    )
+    cv2.putText(
+        img, f"{int(volPer)}%", (40, 450), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 3
     )
 
     cv2.imshow("Img", img)
