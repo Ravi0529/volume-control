@@ -1,11 +1,8 @@
-import sys
-
-sys.path.append(r"D:\VScode\Python\02_Projects\02_Hand_Tracking")
 import cv2
 import time
 import math
 import numpy as np
-import HandTrackingModule as htm
+import HandTrackingModule as htm # PYTHONpATH set in environment variables
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
